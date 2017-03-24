@@ -1,0 +1,21 @@
+<html>
+<head>
+  <title>Quotes</title>
+</head>
+<body>
+  <p>
+  <a href="{% url 'quote:quotes' %}">Dashboard</a>|<a href="{% url 'quote:logout' %}">Log Out</a>
+  </p>
+  <hr>
+  {% for idx in users %}
+    <p>Posts by {{idx.name}}</p>
+  {% endfor %}
+  
+    <p>Count {{quote_count}}</p>
+    <hr>
+  {% for idx in quotes %}
+    <p><strong>{{idx.quoted_by}}:</strong>{{idx.description}}</p><br>
+  {% endfor %}
+
+</body>
+</html>

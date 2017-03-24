@@ -1,0 +1,52 @@
+<html>
+<head>
+  <title>Quotes</title>
+</head>
+<body>
+  <h2>Welcome {{request.session.alias}}</h2>
+  <h3>Quotabe Quotes</h3>
+
+    {% for idx in quotes %}
+      <div>
+        <p>{{idx.quoted_by}}:{{idx.description}}</p><br>
+        <p><em>posted by : <a href="{% url 'quote:user_display' user_id=idx.poster_id %}">{{idx.poster.name}}</a></em></p><br>
+        
+        <a href="{% url 'quote:add_favorite' quote_id=idx.id %}">Add to My Favorites</a>
+        
+      </div>
+      <hr>
+    {% endfor %}
+
+
+
+
+
+
+  <h3>Your Favorites</h3>
+
+    {% for idx in favorites %}
+
+      <p>{{idx.quote_favorite.quoted_by}}: {{idx.quote_favorite.description}}</p>
+      <p>posted by:<a href="{% url 'quote:user_display' user_id=idx.quote_favorite.poster_id %}">{{idx.quote_favorite.poster.name}}</a>
+      <p><a href="{% url 'quote:remove_favorite' quote_id=idx.id %}">Remove from favorites</a><p><hr>
+    {% endfor %}
+    
+
+
+
+
+
+  <h3>Contribute a Quote</h3>
+    <form action="{% url 'quote:post_quote' %}" method="POST">
+      {% csrf_token %}
+      <label>Quoted By:</label>
+        <input type="text" name="quoted_by"><br>
+      <label>Message:</label>
+        <input type="text" name="description"><br>
+
+
+      <input type="submit" name="submit" value="submit">
+    </form>
+  <a href="{% url 'quote:logout' %}">Log Out</a>
+</body>
+</html>
